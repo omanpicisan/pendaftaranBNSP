@@ -15,7 +15,6 @@ const Pendaftaran = () => {
     nisn: '',
   });
   const [editingId, setEditingId] = useState(null);
-
   const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
 
   const showAlert = (message, variant = 'success') => {
@@ -38,15 +37,19 @@ const Pendaftaran = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value.trimStart() });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.nm_pendaftar || !formData.jenis_kelamin) {
-      showAlert('Nama dan Jenis Kelamin wajib diisi!', 'warning');
-      return;
+    const requiredFields = ['nm_pendaftar', 'jenis_kelamin', 'tgl_lahir'];
+    for (const field of requiredFields) {
+      if (!formData[field].trim()) {
+        showAlert(`Field "${field.replace('_', ' ')}" wajib diisi!`, 'warning');
+        return;
+      }
     }
 
     try {
@@ -72,7 +75,8 @@ const Pendaftaran = () => {
       setEditingId(null);
     } catch (err) {
       console.error('Submit error:', err.response?.data || err.message);
-      showAlert('Terjadi kesalahan saat menyimpan data.', 'danger');
+      const msg = err.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.';
+      showAlert(msg, 'danger');
     }
   };
 
@@ -107,7 +111,6 @@ const Pendaftaran = () => {
     <div className="container my-4">
       <h3 className="text-center mb-4">Formulir Pendaftaran Siswa</h3>
 
-      {/* Alert */}
       {alert.show && (
         <Alert variant={alert.variant} className="text-center">
           {alert.message}
