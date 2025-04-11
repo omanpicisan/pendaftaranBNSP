@@ -1,4 +1,4 @@
-/* Sidebar.css */
+/* SIDEBAR UTAMA */
 .sidebar {
     height: 100vh;
     width: 250px;
@@ -7,6 +7,8 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
 }
 
 h3 {
@@ -18,6 +20,9 @@ h3 {
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 ul li {
@@ -35,7 +40,8 @@ ul li a {
     transition: background 0.3s;
 }
 
-ul li a:hover, ul li a.active {
+ul li a:hover,
+ul li a.active {
     background: #0984e9;
 }
 
@@ -60,30 +66,50 @@ ul li a:hover, ul li a.active {
     background: #b91c1c;
 }
 
-/* RESPONSIVE STYLES */
+/* HAMBURGER MENU */
+.hamburger-menu {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: white;
+    background: #099dff;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1001;
+    cursor: pointer;
+}
+
+/* RESPONSIVE UNTUK LAYAR KECIL */
 @media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
     .sidebar {
         position: fixed;
-        bottom: 0;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 250px;
+        background: #099dff;
+        z-index: 1000;
+        transition: left 0.3s ease-in-out;
+        padding: 20px;
+    }
+
+    .sidebar.open {
         left: 0;
-        height: auto;
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 10px;
-        z-index: 999;
     }
 
     h3 {
-        display: none;
+        display: block;
     }
 
     ul {
-        display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 10px;
-        margin: 0;
     }
 
     ul li {
@@ -91,9 +117,9 @@ ul li a:hover, ul li a.active {
     }
 
     ul li a {
-        flex-direction: column;
-        font-size: 12px;
-        padding: 6px;
+        flex-direction: row;
+        font-size: 16px;
+        padding: 10px;
     }
 
     .icon {
@@ -101,14 +127,13 @@ ul li a:hover, ul li a.active {
     }
 
     .logout-button {
-        margin-top: 0;
-        background: transparent;
-        color: white;
-        padding: 6px;
-        font-size: 12px;
+        margin-top: auto;
+        background: #dc2626;
+        font-size: 14px;
+        padding: 10px;
     }
 
     .logout-button:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: #b91c1c;
     }
 }
